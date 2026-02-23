@@ -189,7 +189,7 @@ jobs:
           COMMIT_SHA: ${{ github.sha }}
           SECURITY_PROFILE: ${{ vars.SECURITY_PROFILE || '' }}
         run: |
-          python tools/report_step.py \
+          python -m tools.report_step \
             --repo-root . \
             --artifacts-dir artifacts \
             --sarif-dir sarif
