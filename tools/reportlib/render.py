@@ -130,6 +130,22 @@ def _render_findings_cards(findings: list[dict[str, Any]]) -> str:
     return "".join(cards)
 
 
+def _render_rmf_rows(rmf_mapping: dict[str, Any]) -> str:
+    functions = (rmf_mapping.get("functions") or {}) if isinstance(rmf_mapping, dict) else {}
+    rows: list[str] = []
+    for fn_name in ("MAP", "MEASURE", "MANAGE", "GOVERN"):
+        fn = functions.get(fn_name) or {}
+        rows.append(
+            "<tr>"
+            f"<td><span class='pill'>{_h(fn_name)}</span></td>"
+            f"<td>{_h(fn.get('objective'))}</td>"
+            f"<td>{_h(', '.join(fn.get('implemented_by') or []))}</td>"
+            f"<td>{_h(', '.join(fn.get('key_outputs') or []))}</td>"
+            "</tr>"
+        )
+    return "".join(rows) or "<tr><td colspan='4'>No RMF mapping available.</td></tr>"
+
+
 def render_html(report: dict, template_path: Path) -> str:
     # Keep signature compatible with existing callsites; template_path is intentionally unused.
     _ = template_path
@@ -141,6 +157,7 @@ def render_html(report: dict, template_path: Path) -> str:
     metrics = gate_outcome.get("metrics") or {}
     gate = gate_outcome.get("gate") or {}
     policy = report.get("policy_compliance_exceptions") or {}
+    rmf_mapping = report.get("rmf_function_mapping") or {}
     actions = report.get("action_plan_with_accountability") or []
     limitation_stmt = report.get("limitations_confidence_statement") or {}
     evidence = report.get("evidence_appendix") or {}
@@ -245,6 +262,20 @@ def render_html(report: dict, template_path: Path) -> str:
       <p class="muted">Decision Request: {_h(exec_summary.get('decision_request'))}</p>
       <div class="grid">
         {_render_kpis(metrics)}
+      </div>
+    </section>
+
+    <section class="section split">
+      <div>
+        <h2>NIST AI RMF Mapping</h2>
+        <table>
+          <tr><th>Function</th><th>Objective</th><th>Implemented By</th><th>Key Outputs</th></tr>
+          {_render_rmf_rows(rmf_mapping)}
+        </table>
+      </div>
+      <div>
+        <h2>RMF Constraints</h2>
+        <ul>{_render_list((rmf_mapping.get('constraints') or []))}</ul>
       </div>
     </section>
 
