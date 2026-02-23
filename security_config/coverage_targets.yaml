@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "changed_code_extensions": [".java", ".py", ".js", ".ts", ".go", ".cs", ".rb", ".php", ".scala", ".kt"],
+  "dependency_manifest_patterns": [
+    "pom.xml",
+    "build.gradle",
+    "build.gradle.kts",
+    "requirements.txt",
+    "poetry.lock",
+    "package.json",
+    "package-lock.json",
+    "yarn.lock",
+    "pnpm-lock.yaml",
+    "go.mod",
+    "Cargo.toml",
+    "Gemfile.lock",
+    "composer.lock"
+  ],
+  "profile_overrides": {
+    "known_provenance": {
+      "overall_changed_code_min": 95.0,
+      "sast_changed_code_min": 95.0,
+      "sca_applicability_min": 90.0,
+      "secrets_changed_files_min": 95.0
+    },
+    "partial_ai_provenance": {
+      "overall_changed_code_min": 97.0,
+      "sast_changed_code_min": 97.0,
+      "sca_applicability_min": 95.0,
+      "secrets_changed_files_min": 98.0
+    },
+    "ai_or_unknown_provenance": {
+      "overall_changed_code_min": 99.0,
+      "sast_changed_code_min": 99.0,
+      "sca_applicability_min": 97.0,
+      "secrets_changed_files_min": 99.0
+    }
+  }
+}

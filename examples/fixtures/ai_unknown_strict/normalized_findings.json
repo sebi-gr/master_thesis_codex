@@ -1,0 +1,24 @@
+[
+  {
+    "tool": "semgrep",
+    "rule_id": "java.path.traversal",
+    "severity": "MEDIUM",
+    "message": "User-controlled file path reaches file system API",
+    "file": "src/main/java/com/example/FileExportController.java",
+    "start_line": 61,
+    "end_line": 61,
+    "tags": ["path-traversal", "CWE-22"],
+    "cwe": ["CWE-22"]
+  },
+  {
+    "tool": "semgrep",
+    "rule_id": "java.path.traversal",
+    "severity": "MEDIUM",
+    "message": "Path canonicalization is missing before sink call",
+    "file": "src/main/java/com/example/FileExportController.java",
+    "start_line": 73,
+    "end_line": 73,
+    "tags": ["path-traversal", "CWE-22"],
+    "cwe": ["CWE-22"]
+  }
+]

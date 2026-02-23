@@ -1,0 +1,64 @@
+{
+  "categories": {
+    "secret": 0
+  },
+  "compliance_score": 90.0,
+  "coverage_details": {
+    "required_signals_coverage_percent": 50.0,
+    "sast_changed_code_percent": 100.0,
+    "sca_applicability_percent": null,
+    "secrets_changed_files_percent": 0.0
+  },
+  "coverage_overall_changed_code_percent": 100.0,
+  "density_per_kloc_grouped": null,
+  "gate_status": "pass",
+  "hard_stop_passed": true,
+  "hard_violations": [],
+  "new_critical_findings_count": 0,
+  "new_high_findings_count": 0,
+  "profile": "known_provenance",
+  "secrets_count_delta": 0,
+  "severities": {
+    "critical": 0,
+    "high": 0,
+    "low": 0,
+    "medium": 4
+  },
+  "severity_mix_delta": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "INFO": 0,
+    "LOW": 0,
+    "MEDIUM": 4
+  },
+  "severity_mix_overall": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "INFO": 0,
+    "LOW": 0,
+    "MEDIUM": 4
+  },
+  "soft_warnings": [
+    {
+      "actual": 4,
+      "metric": "new_medium_findings_count",
+      "reason": "New medium findings exceed warning threshold.",
+      "threshold": 3
+    },
+    {
+      "actual": 90.0,
+      "metric": "compliance_score",
+      "reason": "Compliance score is below profile target.",
+      "threshold": 95.0
+    },
+    {
+      "actual": 1,
+      "metric": "missing_required_signals",
+      "reason": "Required scan signals missing: secrets.",
+      "threshold": 0
+    }
+  ],
+  "total_issue_groups": 4,
+  "vulnerability_density_delta_per_kloc": null,
+  "vulnerability_density_overall_per_kloc": 1.145
+}

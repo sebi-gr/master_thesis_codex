@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "pr_trailer_key": "Provenance",
+  "default_if_missing": "ai_or_unknown_provenance",
+  "classifications": {
+    "known_provenance": {
+      "values": ["human"],
+      "confidence": "high"
+    },
+    "partial_ai_provenance": {
+      "values": ["mixed", "partial", "partial_ai"],
+      "confidence": "medium"
+    },
+    "ai_or_unknown_provenance": {
+      "values": ["ai", "unknown", "external"],
+      "confidence": "medium"
+    }
+  },
+  "uncertain_behavior": {
+    "profile": "ai_or_unknown_provenance",
+    "confidence": "low",
+    "note": "If provenance is missing or ambiguous, enforce stricter profile and report uncertainty."
+  }
+}

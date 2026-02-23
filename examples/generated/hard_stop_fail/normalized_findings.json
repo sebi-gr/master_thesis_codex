@@ -1,0 +1,24 @@
+[
+  {
+    "tool": "semgrep",
+    "rule_id": "java.sql.injection",
+    "severity": "HIGH",
+    "message": "Unsanitized request parameter reaches SQL query construction",
+    "file": "src/main/java/com/example/PaymentController.java",
+    "start_line": 88,
+    "end_line": 88,
+    "tags": ["sql-injection", "CWE-89"],
+    "cwe": ["CWE-89"]
+  },
+  {
+    "tool": "gitleaks",
+    "rule_id": "generic-api-key",
+    "severity": "HIGH",
+    "message": "Potential secret detected",
+    "file": "src/main/resources/application.properties",
+    "start_line": 14,
+    "end_line": 14,
+    "tags": ["secret"],
+    "is_secret": true
+  }
+]

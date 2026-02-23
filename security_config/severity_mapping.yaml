@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "severity_order": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+  "label_mapping": {
+    "critical": "CRITICAL",
+    "high": "HIGH",
+    "medium": "MEDIUM",
+    "moderate": "MEDIUM",
+    "low": "LOW",
+    "info": "INFO",
+    "error": "HIGH",
+    "warning": "MEDIUM",
+    "note": "LOW",
+    "none": "INFO"
+  },
+  "security_severity_score": {
+    "critical_min": 9.0,
+    "high_min": 7.0,
+    "medium_min": 4.0
+  }
+}

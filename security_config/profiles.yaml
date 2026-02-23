@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "default_profile": "known_provenance",
+  "profiles": {
+    "known_provenance": {
+      "description": "Baseline profile for known-human provenance changes.",
+      "hard_stop": {
+        "max_new_critical": 0,
+        "max_new_high": 0,
+        "max_secrets_in_delta": 0,
+        "allow_high_exceptions": true
+      },
+      "soft_gate": {
+        "medium_low_blocking": false,
+        "max_new_medium_warn": 3,
+        "max_new_low_warn": 10,
+        "max_vulnerability_density_delta_warn": 2.0
+      },
+      "targets": {
+        "compliance_score_min": 95.0,
+        "coverage_changed_code_min": 95.0,
+        "required_signals_coverage_min": 100.0,
+        "evidence_strength": "standard"
+      }
+    },
+    "partial_ai_provenance": {
+      "description": "Intermediate profile for mixed/partial AI provenance.",
+      "hard_stop": {
+        "max_new_critical": 0,
+        "max_new_high": 0,
+        "max_secrets_in_delta": 0,
+        "allow_high_exceptions": false
+      },
+      "soft_gate": {
+        "medium_low_blocking": false,
+        "max_new_medium_warn": 2,
+        "max_new_low_warn": 8,
+        "max_vulnerability_density_delta_warn": 1.5
+      },
+      "targets": {
+        "compliance_score_min": 97.0,
+        "coverage_changed_code_min": 97.0,
+        "required_signals_coverage_min": 100.0,
+        "evidence_strength": "elevated"
+      }
+    },
+    "ai_or_unknown_provenance": {
+      "description": "Strict profile for AI or uncertain provenance changes.",
+      "hard_stop": {
+        "max_new_critical": 0,
+        "max_new_high": 0,
+        "max_secrets_in_delta": 0,
+        "allow_high_exceptions": false
+      },
+      "soft_gate": {
+        "medium_low_blocking": false,
+        "max_new_medium_warn": 1,
+        "max_new_low_warn": 5,
+        "max_vulnerability_density_delta_warn": 1.0
+      },
+      "targets": {
+        "compliance_score_min": 98.0,
+        "coverage_changed_code_min": 99.0,
+        "required_signals_coverage_min": 100.0,
+        "evidence_strength": "high"
+      }
+    }
+  }
+}

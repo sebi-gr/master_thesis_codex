@@ -1,0 +1,235 @@
+name: PR Security
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  workflow_dispatch:
+  schedule:
+    - cron: '15 3 * * *'
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  provenance:
+    if: github.event_name == 'pull_request'
+    name: 1) Provenance Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Validate PR body has provenance trailer
+        uses: actions-ecosystem/action-regex-match@v2
+        id: match
+        with:
+          text: "${{ github.event.pull_request.body || '' }}"
+          regex: 'Provenance:\s*(ai|human|external|mixed|unknown)\s*'
+          flags: 'mi'
+
+      - name: Fail if Provenance missing/invalid
+        if: steps.match.outputs.match == ''
+        run: |
+          echo "Missing or invalid 'Provenance:' trailer in PR body." >&2
+          exit 1
+
+  gitleaks:
+    name: 2) Secrets Scan (Gitleaks)
+    runs-on: ubuntu-latest
+    needs: provenance
+    if: always() && (needs.provenance.result == 'success' || needs.provenance.result == 'skipped')
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        continue-on-error: true
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+        with:
+          args: >
+            detect --source=. --no-git --redact --no-banner --exit-code 1
+
+      - name: Normalize Gitleaks SARIF path
+        if: ${{ always() }}
+        run: |
+          if [ -f results.sarif ]; then
+            mv results.sarif gitleaks.sarif
+          fi
+          if [ ! -f gitleaks.sarif ]; then
+            echo '{"version":"2.1.0","runs":[]}' > gitleaks.sarif
+          fi
+
+      - name: Upload Gitleaks SARIF
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-sarif
+          path: gitleaks.sarif
+
+  semgrep:
+    name: 3) Semgrep (Java)
+    runs-on: ubuntu-latest
+    needs: gitleaks
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Semgrep (security-audit)
+        continue-on-error: true
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/security-audit
+          generateSarif: "1"
+
+      - name: Ensure Semgrep SARIF exists
+        if: ${{ always() }}
+        run: |
+          if [ ! -f semgrep.sarif ]; then
+            echo '{"version":"2.1.0","runs":[]}' > semgrep.sarif
+          fi
+
+      - name: Upload Semgrep SARIF
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-sarif
+          path: semgrep.sarif
+
+  codeql:
+    name: 4) CodeQL (Java - manual build)
+    runs-on: ubuntu-latest
+    needs: semgrep
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+
+      - name: Build Java
+        run: |
+          mkdir -p build
+          javac -cp "lib/javax.servlet-api-4.0.1.jar" -g -d build $(git ls-files "*.java")
+
+      - name: Analyze
+        continue-on-error: true
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:java"
+          output: codeql-results
+
+      - name: Ensure CodeQL SARIF exists
+        if: ${{ always() }}
+        run: |
+          mkdir -p codeql-results
+          if ! ls codeql-results/*.sarif >/dev/null 2>&1; then
+            echo '{"version":"2.1.0","runs":[]}' > codeql-results/java.sarif
+          fi
+
+      - name: Upload CodeQL SARIF
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-sarif
+          path: codeql-results
+
+  metrics:
+    name: 5) Security Metrics + Report
+    runs-on: ubuntu-latest
+    needs: [gitleaks, semgrep, codeql]
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download SARIF artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-sarif'
+          path: sarif
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Build security report and metrics artifacts
+        env:
+          PR_BODY: ${{ github.event.pull_request.body || '' }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          REPO_NAME: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+          COMMIT_SHA: ${{ github.sha }}
+          SECURITY_PROFILE: ${{ vars.SECURITY_PROFILE || '' }}
+        run: |
+          python tools/report_step.py \
+            --repo-root . \
+            --artifacts-dir artifacts \
+            --sarif-dir sarif
+
+      - name: Upload security artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report-artifacts
+          path: |
+            artifacts/security-report.json
+            artifacts/security-report.md
+            artifacts/security-metrics.json
+            artifacts/gate-result.json
+            artifacts/report.html
+            artifacts/pr_summary.md
+
+  quality_gate:
+    name: 6) Security Quality Gate
+    runs-on: ubuntu-latest
+    needs: metrics
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download security artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: security-report-artifacts
+          path: artifacts
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Enforce deterministic hard-stop gate
+        run: |
+          python .github/workflows/scripts/enforce_quality_gate.py \
+            --gate-file artifacts/gate-result.json \
+            --metrics-file artifacts/security-metrics.json

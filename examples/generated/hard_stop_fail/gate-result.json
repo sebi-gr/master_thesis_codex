@@ -1,0 +1,51 @@
+{
+  "final_outcome": "fail",
+  "hard_stop": {
+    "metrics": {
+      "new_critical_findings_count": 0,
+      "new_high_findings_count": 2,
+      "secrets_count_delta": 1
+    },
+    "passed": false,
+    "thresholds": {
+      "allow_high_exceptions": true,
+      "max_new_critical": 0,
+      "max_new_high": 0,
+      "max_secrets_in_delta": 0
+    },
+    "violations": [
+      {
+        "actual": 2,
+        "exception_id": null,
+        "metric": "new_high_findings_count",
+        "reason": "New high findings exceed hard-stop threshold.",
+        "threshold": 0
+      },
+      {
+        "actual": 1,
+        "exception_id": null,
+        "metric": "secrets_count_delta",
+        "reason": "Secrets detected in changed scope.",
+        "threshold": 0
+      }
+    ]
+  },
+  "profile": "known_provenance",
+  "reason_summary": [
+    "New high findings exceed hard-stop threshold.",
+    "Secrets detected in changed scope.",
+    "Compliance score is below profile target."
+  ],
+  "soft_gate": {
+    "medium_low_blocking": false,
+    "warnings": [
+      {
+        "actual": 50.0,
+        "metric": "compliance_score",
+        "reason": "Compliance score is below profile target.",
+        "threshold": 95.0
+      }
+    ]
+  },
+  "status_for_ci": "fail"
+}

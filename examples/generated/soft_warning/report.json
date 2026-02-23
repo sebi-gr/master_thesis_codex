@@ -1,0 +1,506 @@
+{
+  "action_plan_with_accountability": [
+    {
+      "follow_up": "Next sprint",
+      "item": "Address 4 finding(s) in category 'weak_crypto' and add regression checks.",
+      "owner_role": "Security Champion",
+      "priority": "P2",
+      "source": "delta_category_summary"
+    }
+  ],
+  "evidence_appendix": {
+    "all_findings_count": 4,
+    "baseline": {
+      "count": 0,
+      "notes": [
+        "No baseline file supplied."
+      ],
+      "source": "none"
+    },
+    "config_hashes_sha256": {
+      "coverage_targets.yaml": "c6ceda6a54425defe898ab0bab0b90015ab1e24b6432c1838feebd8371276d60",
+      "exceptions.yaml": "0804b0416c6c75bb021ee642e160272d9deb68053c1f15279c294c1e1711c151",
+      "policies.yaml": "4f1d2a0cb7ce2fab450eaa7f12791cd4dfd0a57fb5a2ce482933291900cdd468",
+      "profiles.yaml": "425c55705ca4ca4cc00ba233cf9129a78d49c9aff7943644bde57fad3b96aea9",
+      "provenance.yaml": "55c45f2ea845a37c5081fe9b5ce3f18a2e6dc904e2f9918e018bf6e00f468141",
+      "severity_mapping.yaml": "dfa5904623fb4f5a253166f45547d99016b56172bd54cc912a6f270552568d56",
+      "tooling.yaml": "250f593469cdb945a20b252bb60455ecafabeb84307af795a56b999d2c399edd"
+    },
+    "config_versions": {
+      "coverage_targets": "1.0.0",
+      "exceptions": "1.0.0",
+      "policies": "1.0.0",
+      "profiles": "1.0.0",
+      "provenance": "1.0.0",
+      "severity_mapping": "1.0.0",
+      "tooling": "1.0.0"
+    },
+    "delta_findings_count": 4,
+    "generated_at_utc": "2026-02-23T19:44:22.805859+00:00",
+    "profile": "known_provenance",
+    "provenance": {
+      "confidence": "high",
+      "determination_source": "env",
+      "is_uncertain": false,
+      "note": "",
+      "profile": "known_provenance",
+      "raw_value": "human"
+    },
+    "raw_delta_findings": [
+      {
+        "category": "weak_crypto",
+        "cwe": [
+          "CWE-327"
+        ],
+        "end_line": 77,
+        "file": "src/main/java/com/example/CryptoUtil.java",
+        "fingerprint": null,
+        "is_secret": false,
+        "message": "Weak hash algorithm used in signing workflow",
+        "rule_id": "java.weak.crypto.sha1",
+        "severity": "MEDIUM",
+        "signal": "sast",
+        "start_line": 77,
+        "tags": [
+          "weak-crypto",
+          "CWE-327"
+        ],
+        "tool": "semgrep"
+      },
+      {
+        "category": "weak_crypto",
+        "cwe": [
+          "CWE-327"
+        ],
+        "end_line": 66,
+        "file": "src/main/java/com/example/CryptoUtil.java",
+        "fingerprint": null,
+        "is_secret": false,
+        "message": "MD5 is used for a security-sensitive context",
+        "rule_id": "java.weak.crypto.md5",
+        "severity": "MEDIUM",
+        "signal": "sast",
+        "start_line": 66,
+        "tags": [
+          "weak-crypto",
+          "CWE-327"
+        ],
+        "tool": "semgrep"
+      },
+      {
+        "category": "weak_crypto",
+        "cwe": [
+          "CWE-327"
+        ],
+        "end_line": 52,
+        "file": "src/main/java/com/example/CryptoUtil.java",
+        "fingerprint": null,
+        "is_secret": false,
+        "message": "MD5 is used for a security-sensitive context",
+        "rule_id": "java.weak.crypto.md5",
+        "severity": "MEDIUM",
+        "signal": "sast",
+        "start_line": 52,
+        "tags": [
+          "weak-crypto",
+          "CWE-327"
+        ],
+        "tool": "semgrep"
+      },
+      {
+        "category": "weak_crypto",
+        "cwe": [
+          "CWE-327"
+        ],
+        "end_line": 33,
+        "file": "src/main/java/com/example/CryptoUtil.java",
+        "fingerprint": null,
+        "is_secret": false,
+        "message": "MD5 is used for a security-sensitive context",
+        "rule_id": "java.weak.crypto.md5",
+        "severity": "MEDIUM",
+        "signal": "sast",
+        "start_line": 33,
+        "tags": [
+          "weak-crypto",
+          "CWE-327"
+        ],
+        "tool": "semgrep"
+      }
+    ],
+    "reproducibility": {
+      "deterministic_gate_inputs": true,
+      "notes": [
+        "Gate outcome is computed only from parsed findings + profile config + baseline + changed scope.",
+        "No absolute security claim is made; results are bounded by scanner coverage and tool limitations."
+      ],
+      "policy_as_code": true,
+      "thresholds_as_code": true
+    },
+    "scan_scope": {
+      "changed_files": [
+        "src/main/java/com/example/CryptoUtil.java"
+      ],
+      "changed_loc": 0,
+      "is_exact": false,
+      "method": "env_hint",
+      "notes": [
+        "Changed files came from CHANGED_FILES hint; changed LOC unavailable."
+      ]
+    },
+    "tool_inputs": [
+      {
+        "path": "examples/generated/soft_warning/normalized_findings.json",
+        "type": "json"
+      }
+    ],
+    "tool_versions": []
+  },
+  "executive_decision_summary": {
+    "audience": "Engineering leadership, security reviewers, release managers",
+    "decision": "CONDITIONAL_GO",
+    "decision_request": "Go/No-Go decision for merge and release progression",
+    "evidence_requirement_level": "standard",
+    "gate_profile": "known_provenance",
+    "key_risks": [
+      {
+        "category": "weak_crypto",
+        "count": 4,
+        "severity": "MEDIUM"
+      }
+    ],
+    "provenance": {
+      "confidence": "high",
+      "determination_source": "env",
+      "is_uncertain": false,
+      "note": "",
+      "profile": "known_provenance",
+      "raw_value": "human"
+    },
+    "rationale": [
+      "New medium findings exceed warning threshold.",
+      "Compliance score is below profile target.",
+      "Required scan signals missing: secrets."
+    ]
+  },
+  "gate": {
+    "final_outcome": "pass_with_warnings",
+    "hard_stop": {
+      "metrics": {
+        "new_critical_findings_count": 0,
+        "new_high_findings_count": 0,
+        "secrets_count_delta": 0
+      },
+      "passed": true,
+      "thresholds": {
+        "allow_high_exceptions": true,
+        "max_new_critical": 0,
+        "max_new_high": 0,
+        "max_secrets_in_delta": 0
+      },
+      "violations": []
+    },
+    "profile": "known_provenance",
+    "reason_summary": [
+      "New medium findings exceed warning threshold.",
+      "Compliance score is below profile target.",
+      "Required scan signals missing: secrets."
+    ],
+    "soft_gate": {
+      "medium_low_blocking": false,
+      "warnings": [
+        {
+          "actual": 4,
+          "metric": "new_medium_findings_count",
+          "reason": "New medium findings exceed warning threshold.",
+          "threshold": 3
+        },
+        {
+          "actual": 90.0,
+          "metric": "compliance_score",
+          "reason": "Compliance score is below profile target.",
+          "threshold": 95.0
+        },
+        {
+          "actual": 1,
+          "metric": "missing_required_signals",
+          "reason": "Required scan signals missing: secrets.",
+          "threshold": 0
+        }
+      ]
+    },
+    "status_for_ci": "pass"
+  },
+  "key_metrics_gate_outcome": {
+    "gate": {
+      "final_outcome": "pass_with_warnings",
+      "hard_stop": {
+        "metrics": {
+          "new_critical_findings_count": 0,
+          "new_high_findings_count": 0,
+          "secrets_count_delta": 0
+        },
+        "passed": true,
+        "thresholds": {
+          "allow_high_exceptions": true,
+          "max_new_critical": 0,
+          "max_new_high": 0,
+          "max_secrets_in_delta": 0
+        },
+        "violations": []
+      },
+      "profile": "known_provenance",
+      "reason_summary": [
+        "New medium findings exceed warning threshold.",
+        "Compliance score is below profile target.",
+        "Required scan signals missing: secrets."
+      ],
+      "soft_gate": {
+        "medium_low_blocking": false,
+        "warnings": [
+          {
+            "actual": 4,
+            "metric": "new_medium_findings_count",
+            "reason": "New medium findings exceed warning threshold.",
+            "threshold": 3
+          },
+          {
+            "actual": 90.0,
+            "metric": "compliance_score",
+            "reason": "Compliance score is below profile target.",
+            "threshold": 95.0
+          },
+          {
+            "actual": 1,
+            "metric": "missing_required_signals",
+            "reason": "Required scan signals missing: secrets.",
+            "threshold": 0
+          }
+        ]
+      },
+      "status_for_ci": "pass"
+    },
+    "metrics": {
+      "compliance_score": 90.0,
+      "coverage_overall_changed_code_percent": 100.0,
+      "coverage_sast_changed_code_percent": 100.0,
+      "coverage_sca_applicability_percent": null,
+      "coverage_secrets_changed_files_percent": 0.0,
+      "new_critical_findings_count": 0,
+      "new_findings_count": 4,
+      "new_high_findings_count": 0,
+      "new_low_findings_count": 0,
+      "new_medium_findings_count": 4,
+      "required_signals_coverage_percent": 50.0,
+      "secrets_count_delta": 0,
+      "severity_mix_delta": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "INFO": 0,
+        "LOW": 0,
+        "MEDIUM": 4
+      },
+      "severity_mix_overall": {
+        "CRITICAL": 0,
+        "HIGH": 0,
+        "INFO": 0,
+        "LOW": 0,
+        "MEDIUM": 4
+      },
+      "vulnerability_density_delta_per_kloc": null,
+      "vulnerability_density_overall_per_kloc": 1.145
+    },
+    "thresholds": {
+      "allow_high_exceptions": true,
+      "max_new_critical": 0,
+      "max_new_high": 0,
+      "max_secrets_in_delta": 0
+    }
+  },
+  "limitations_confidence_statement": {
+    "confidence": "high",
+    "credibility_constraints": [
+      "No absolute security guarantee is claimed.",
+      "Passing the hard-stop gate indicates threshold compliance within measured scope, not complete security."
+    ],
+    "limitations": [
+      {
+        "statement": "Metrics are based on configured scanner outputs and parsed scope only.",
+        "usability_note": "Report remains decision-useful because thresholds, scope, and provenance are explicit."
+      },
+      {
+        "statement": "No-finding states can still contain residual risk due to tool blind spots.",
+        "usability_note": "Report remains decision-useful because thresholds, scope, and provenance are explicit."
+      },
+      {
+        "statement": "Required scan signals missing in this run: secrets.",
+        "usability_note": "Report remains decision-useful because thresholds, scope, and provenance are explicit."
+      }
+    ],
+    "uncertainty_representation": {
+      "coverage_percent": 100.0,
+      "evidence_requirement_level": "standard",
+      "false_positive_false_negative_note": "Scanner outputs may contain false positives/false negatives; decisions should include engineering review.",
+      "provenance_uncertain": false
+    }
+  },
+  "measure": {
+    "kloc": 3.494,
+    "loc": 3494,
+    "totals_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "INFO": 0,
+      "LOW": 0,
+      "MEDIUM": 4
+    }
+  },
+  "metadata": {
+    "commit_sha": "",
+    "generated_at_utc": "2026-02-23T19:44:22.805540+00:00",
+    "pr_number": "",
+    "profile": "known_provenance",
+    "provenance": {
+      "confidence": "high",
+      "determination_source": "env",
+      "is_uncertain": false,
+      "note": "",
+      "profile": "known_provenance",
+      "raw_value": "human"
+    },
+    "repo": "nist_auditor",
+    "run_id": "",
+    "workflow": ""
+  },
+  "policy_compliance_exceptions": {
+    "active_exceptions": [],
+    "blocking_failures": [],
+    "compliance_score": 90.0,
+    "non_blocking_failures": [
+      {
+        "blocking": false,
+        "comparator": ">=",
+        "description": "Required scanner signals (e.g., SAST and secrets) should be present for defensible evidence.",
+        "evaluation_error": "",
+        "exception_id": null,
+        "exception_rationale": null,
+        "id": "POL-005",
+        "metric": "required_signals_coverage_percent",
+        "passed": false,
+        "threshold": 100.0,
+        "threshold_ref": "targets.required_signals_coverage_min",
+        "title": "Required scan signal presence",
+        "value": 50.0,
+        "weight": 10.0
+      }
+    ],
+    "policy_version": "1.0.0",
+    "rules": [
+      {
+        "blocking": true,
+        "comparator": "<=",
+        "description": "New critical findings in changed scope must remain at or below configured hard-stop threshold.",
+        "evaluation_error": "",
+        "exception_id": null,
+        "exception_rationale": null,
+        "id": "POL-001",
+        "metric": "new_critical_findings_count",
+        "passed": true,
+        "threshold": 0,
+        "threshold_ref": "hard_stop.max_new_critical",
+        "title": "No new critical findings in delta",
+        "value": 0,
+        "weight": 25.0
+      },
+      {
+        "blocking": true,
+        "comparator": "<=",
+        "description": "New high findings in changed scope must remain at or below configured hard-stop threshold.",
+        "evaluation_error": "",
+        "exception_id": null,
+        "exception_rationale": null,
+        "id": "POL-002",
+        "metric": "new_high_findings_count",
+        "passed": true,
+        "threshold": 0,
+        "threshold_ref": "hard_stop.max_new_high",
+        "title": "No new high findings in delta",
+        "value": 0,
+        "weight": 25.0
+      },
+      {
+        "blocking": true,
+        "comparator": "<=",
+        "description": "Secrets in scanned change set are deterministic blockers.",
+        "evaluation_error": "",
+        "exception_id": null,
+        "exception_rationale": null,
+        "id": "POL-003",
+        "metric": "secrets_count_delta",
+        "passed": true,
+        "threshold": 0,
+        "threshold_ref": "hard_stop.max_secrets_in_delta",
+        "title": "No leaked secrets in delta",
+        "value": 0,
+        "weight": 25.0
+      },
+      {
+        "blocking": false,
+        "comparator": ">=",
+        "description": "Changed code coverage should meet profile target to avoid false confidence.",
+        "evaluation_error": "",
+        "exception_id": null,
+        "exception_rationale": null,
+        "id": "POL-004",
+        "metric": "coverage_overall_changed_code_percent",
+        "passed": true,
+        "threshold": 95.0,
+        "threshold_ref": "targets.coverage_changed_code_min",
+        "title": "Changed-code coverage target",
+        "value": 100.0,
+        "weight": 15.0
+      },
+      {
+        "blocking": false,
+        "comparator": ">=",
+        "description": "Required scanner signals (e.g., SAST and secrets) should be present for defensible evidence.",
+        "evaluation_error": "",
+        "exception_id": null,
+        "exception_rationale": null,
+        "id": "POL-005",
+        "metric": "required_signals_coverage_percent",
+        "passed": false,
+        "threshold": 100.0,
+        "threshold_ref": "targets.required_signals_coverage_min",
+        "title": "Required scan signal presence",
+        "value": 50.0,
+        "weight": 10.0
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "scope_context": {
+    "assessed_assets": [
+      "src/main/java/com/example/CryptoUtil.java"
+    ],
+    "exposure_assumptions": [
+      "Findings are evaluated for changed code scope first (delta-oriented gating).",
+      "Tool outputs are treated as signals; absence of findings does not imply absence of risk."
+    ],
+    "scan_scope": {
+      "changed_files": [
+        "src/main/java/com/example/CryptoUtil.java"
+      ],
+      "changed_loc": 0,
+      "is_exact": false,
+      "method": "env_hint",
+      "notes": [
+        "Changed files came from CHANGED_FILES hint; changed LOC unavailable."
+      ]
+    },
+    "scope_boundaries": [
+      "Only configured scanners and parsers are included in this report.",
+      "Runtime behavior and production-only controls are outside direct static scan evidence."
+    ]
+  }
+}

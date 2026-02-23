@@ -1,0 +1,67 @@
+{
+  "categories": {
+    "secret": 1
+  },
+  "compliance_score": 50.0,
+  "coverage_details": {
+    "required_signals_coverage_percent": 100.0,
+    "sast_changed_code_percent": 100.0,
+    "sca_applicability_percent": null,
+    "secrets_changed_files_percent": 100.0
+  },
+  "coverage_overall_changed_code_percent": 100.0,
+  "density_per_kloc_grouped": null,
+  "gate_status": "fail",
+  "hard_stop_passed": false,
+  "hard_violations": [
+    {
+      "actual": 2,
+      "exception_id": null,
+      "metric": "new_high_findings_count",
+      "reason": "New high findings exceed hard-stop threshold.",
+      "threshold": 0
+    },
+    {
+      "actual": 1,
+      "exception_id": null,
+      "metric": "secrets_count_delta",
+      "reason": "Secrets detected in changed scope.",
+      "threshold": 0
+    }
+  ],
+  "new_critical_findings_count": 0,
+  "new_high_findings_count": 2,
+  "profile": "known_provenance",
+  "secrets_count_delta": 1,
+  "severities": {
+    "critical": 0,
+    "high": 2,
+    "low": 0,
+    "medium": 0
+  },
+  "severity_mix_delta": {
+    "CRITICAL": 0,
+    "HIGH": 2,
+    "INFO": 0,
+    "LOW": 0,
+    "MEDIUM": 0
+  },
+  "severity_mix_overall": {
+    "CRITICAL": 0,
+    "HIGH": 2,
+    "INFO": 0,
+    "LOW": 0,
+    "MEDIUM": 0
+  },
+  "soft_warnings": [
+    {
+      "actual": 50.0,
+      "metric": "compliance_score",
+      "reason": "Compliance score is below profile target.",
+      "threshold": 95.0
+    }
+  ],
+  "total_issue_groups": 2,
+  "vulnerability_density_delta_per_kloc": null,
+  "vulnerability_density_overall_per_kloc": 0.572
+}

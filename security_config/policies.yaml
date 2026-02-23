@@ -1,0 +1,55 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "POL-001",
+      "title": "No new critical findings in delta",
+      "description": "New critical findings in changed scope must remain at or below configured hard-stop threshold.",
+      "metric": "new_critical_findings_count",
+      "comparator": "<=",
+      "threshold_ref": "hard_stop.max_new_critical",
+      "weight": 25,
+      "blocking": true
+    },
+    {
+      "id": "POL-002",
+      "title": "No new high findings in delta",
+      "description": "New high findings in changed scope must remain at or below configured hard-stop threshold.",
+      "metric": "new_high_findings_count",
+      "comparator": "<=",
+      "threshold_ref": "hard_stop.max_new_high",
+      "weight": 25,
+      "blocking": true
+    },
+    {
+      "id": "POL-003",
+      "title": "No leaked secrets in delta",
+      "description": "Secrets in scanned change set are deterministic blockers.",
+      "metric": "secrets_count_delta",
+      "comparator": "<=",
+      "threshold_ref": "hard_stop.max_secrets_in_delta",
+      "weight": 25,
+      "blocking": true
+    },
+    {
+      "id": "POL-004",
+      "title": "Changed-code coverage target",
+      "description": "Changed code coverage should meet profile target to avoid false confidence.",
+      "metric": "coverage_overall_changed_code_percent",
+      "comparator": ">=",
+      "threshold_ref": "targets.coverage_changed_code_min",
+      "weight": 15,
+      "blocking": false
+    },
+    {
+      "id": "POL-005",
+      "title": "Required scan signal presence",
+      "description": "Required scanner signals (e.g., SAST and secrets) should be present for defensible evidence.",
+      "metric": "required_signals_coverage_percent",
+      "comparator": ">=",
+      "threshold_ref": "targets.required_signals_coverage_min",
+      "weight": 10,
+      "blocking": false
+    }
+  ]
+}

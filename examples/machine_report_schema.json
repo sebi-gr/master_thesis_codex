@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/security-decision-report.schema.json",
+  "title": "SecurityDecisionReport",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "metadata",
+    "executive_decision_summary",
+    "scope_context",
+    "key_metrics_gate_outcome",
+    "policy_compliance_exceptions",
+    "action_plan_with_accountability",
+    "limitations_confidence_statement",
+    "evidence_appendix"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "metadata": {"type": "object"},
+    "executive_decision_summary": {
+      "type": "object",
+      "required": ["decision", "decision_request", "audience", "gate_profile"],
+      "properties": {
+        "decision": {"type": "string", "enum": ["GO", "NO-GO", "CONDITIONAL_GO"]},
+        "decision_request": {"type": "string"},
+        "audience": {"type": "string"},
+        "gate_profile": {"type": "string"},
+        "provenance": {"type": "object"},
+        "rationale": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "scope_context": {"type": "object"},
+    "key_metrics_gate_outcome": {
+      "type": "object",
+      "required": ["metrics", "thresholds", "gate"],
+      "properties": {
+        "metrics": {
+          "type": "object",
+          "required": [
+            "new_critical_findings_count",
+            "new_high_findings_count",
+            "severity_mix_delta",
+            "severity_mix_overall",
+            "secrets_count_delta",
+            "vulnerability_density_delta_per_kloc",
+            "coverage_overall_changed_code_percent",
+            "compliance_score"
+          ]
+        },
+        "thresholds": {"type": "object"},
+        "gate": {"type": "object"}
+      }
+    },
+    "policy_compliance_exceptions": {"type": "object"},
+    "action_plan_with_accountability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "owner_role", "priority", "follow_up"],
+        "properties": {
+          "item": {"type": "string"},
+          "owner_role": {"type": "string"},
+          "priority": {"type": "string"},
+          "follow_up": {"type": "string"},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "limitations_confidence_statement": {"type": "object"},
+    "evidence_appendix": {"type": "object"}
+  }
+}

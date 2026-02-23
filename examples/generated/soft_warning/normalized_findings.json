@@ -1,0 +1,46 @@
+[
+  {
+    "tool": "semgrep",
+    "rule_id": "java.weak.crypto.md5",
+    "severity": "MEDIUM",
+    "message": "MD5 is used for a security-sensitive context",
+    "file": "src/main/java/com/example/CryptoUtil.java",
+    "start_line": 33,
+    "end_line": 33,
+    "tags": ["weak-crypto", "CWE-327"],
+    "cwe": ["CWE-327"]
+  },
+  {
+    "tool": "semgrep",
+    "rule_id": "java.weak.crypto.md5",
+    "severity": "MEDIUM",
+    "message": "MD5 is used for a security-sensitive context",
+    "file": "src/main/java/com/example/CryptoUtil.java",
+    "start_line": 52,
+    "end_line": 52,
+    "tags": ["weak-crypto", "CWE-327"],
+    "cwe": ["CWE-327"]
+  },
+  {
+    "tool": "semgrep",
+    "rule_id": "java.weak.crypto.md5",
+    "severity": "MEDIUM",
+    "message": "MD5 is used for a security-sensitive context",
+    "file": "src/main/java/com/example/CryptoUtil.java",
+    "start_line": 66,
+    "end_line": 66,
+    "tags": ["weak-crypto", "CWE-327"],
+    "cwe": ["CWE-327"]
+  },
+  {
+    "tool": "semgrep",
+    "rule_id": "java.weak.crypto.sha1",
+    "severity": "MEDIUM",
+    "message": "Weak hash algorithm used in signing workflow",
+    "file": "src/main/java/com/example/CryptoUtil.java",
+    "start_line": 77,
+    "end_line": 77,
+    "tags": ["weak-crypto", "CWE-327"],
+    "cwe": ["CWE-327"]
+  }
+]

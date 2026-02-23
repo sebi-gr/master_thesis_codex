@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "tools": {
+    "codeql": {
+      "signal": "sast",
+      "severity_source": "sarif",
+      "claims_full_repo_scan": false
+    },
+    "semgrep": {
+      "signal": "sast",
+      "severity_source": "sarif",
+      "claims_full_repo_scan": false
+    },
+    "gitleaks": {
+      "signal": "secrets",
+      "severity_source": "fixed_high",
+      "claims_full_repo_scan": true
+    },
+    "trivy": {
+      "signal": "sca",
+      "severity_source": "scanner",
+      "claims_full_repo_scan": false
+    },
+    "dependency-check": {
+      "signal": "sca",
+      "severity_source": "scanner",
+      "claims_full_repo_scan": false
+    }
+  },
+  "signal_expectations": {
+    "required_signals": ["sast", "secrets"],
+    "optional_signals": ["sca", "dast"]
+  }
+}

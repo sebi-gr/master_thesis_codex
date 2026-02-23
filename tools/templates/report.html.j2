@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Security Decision Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2937; }
+    h1, h2 { margin-bottom: 8px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: #e5e7eb; margin-right: 8px; }
+    .badge.fail { background: #fee2e2; color: #991b1b; }
+    .badge.pass { background: #dcfce7; color: #166534; }
+    .section { margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+    pre { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>Security Decision Report</h1>
+  <div>
+    <span class="badge {{ 'fail' if report.gate.status_for_ci == 'fail' else 'pass' }}">Gate: {{ report.gate.status_for_ci|upper }}</span>
+    <span class="badge">Profile: {{ report.executive_decision_summary.gate_profile }}</span>
+    <span class="badge">Provenance: {{ report.executive_decision_summary.provenance.raw_value }}</span>
+  </div>
+
+  <div class="section">
+    <h2>1. Executive Decision Summary</h2>
+    <p><b>Decision:</b> {{ report.executive_decision_summary.decision }}</p>
+    <p><b>Decision request:</b> {{ report.executive_decision_summary.decision_request }}</p>
+    <p><b>Audience:</b> {{ report.executive_decision_summary.audience }}</p>
+    <p><b>Rationale:</b> {{ report.executive_decision_summary.rationale }}</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Scope &amp; Context</h2>
+    <pre>{{ report.scope_context | tojson(indent=2) }}</pre>
+  </div>
+
+  <div class="section">
+    <h2>3. Key Metrics &amp; Gate Outcome</h2>
+    <table>
+      <tr><th>New Critical</th><td>{{ report.key_metrics_gate_outcome.metrics.new_critical_findings_count }}</td></tr>
+      <tr><th>New High</th><td>{{ report.key_metrics_gate_outcome.metrics.new_high_findings_count }}</td></tr>
+      <tr><th>Secrets (delta)</th><td>{{ report.key_metrics_gate_outcome.metrics.secrets_count_delta }}</td></tr>
+      <tr><th>Vuln Density (delta/KLOC)</th><td>{{ report.key_metrics_gate_outcome.metrics.vulnerability_density_delta_per_kloc }}</td></tr>
+      <tr><th>Coverage (changed code)</th><td>{{ report.key_metrics_gate_outcome.metrics.coverage_overall_changed_code_percent }}</td></tr>
+      <tr><th>Compliance Score</th><td>{{ report.key_metrics_gate_outcome.metrics.compliance_score }}</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>4. Policy Compliance &amp; Exceptions</h2>
+    <pre>{{ report.policy_compliance_exceptions | tojson(indent=2) }}</pre>
+  </div>
+
+  <div class="section">
+    <h2>5. Action Plan with Accountability</h2>
+    <table>
+      <tr><th>Priority</th><th>Action</th><th>Owner Role</th><th>Follow-up</th></tr>
+      {% for action in report.action_plan_with_accountability %}
+      <tr>
+        <td>{{ action.priority }}</td>
+        <td>{{ action.item }}</td>
+        <td>{{ action.owner_role }}</td>
+        <td>{{ action.follow_up }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>6. Limitations &amp; Confidence Statement</h2>
+    <pre>{{ report.limitations_confidence_statement | tojson(indent=2) }}</pre>
+  </div>
+
+  <div class="section">
+    <h2>7. Evidence Appendix</h2>
+    <pre>{{ report.evidence_appendix | tojson(indent=2) }}</pre>
+  </div>
+</body>
+</html>

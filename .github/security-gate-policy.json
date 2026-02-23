@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "source_of_truth": "security_config/profiles.yaml",
+  "default_profile": "known_provenance",
+  "allowed_profile_overrides": [
+    "known_provenance",
+    "partial_ai_provenance",
+    "ai_or_unknown_provenance"
+  ],
+  "notes": "Hard-stop and soft-gate thresholds are defined in security_config/profiles.yaml."
+}

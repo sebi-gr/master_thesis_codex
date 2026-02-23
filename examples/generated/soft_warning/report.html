@@ -1,0 +1,506 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Security Report</title></head><body><h1>Security Report</h1><pre>{
+  &quot;action_plan_with_accountability&quot;: [
+    {
+      &quot;follow_up&quot;: &quot;Next sprint&quot;,
+      &quot;item&quot;: &quot;Address 4 finding(s) in category &#x27;weak_crypto&#x27; and add regression checks.&quot;,
+      &quot;owner_role&quot;: &quot;Security Champion&quot;,
+      &quot;priority&quot;: &quot;P2&quot;,
+      &quot;source&quot;: &quot;delta_category_summary&quot;
+    }
+  ],
+  &quot;evidence_appendix&quot;: {
+    &quot;all_findings_count&quot;: 4,
+    &quot;baseline&quot;: {
+      &quot;count&quot;: 0,
+      &quot;notes&quot;: [
+        &quot;No baseline file supplied.&quot;
+      ],
+      &quot;source&quot;: &quot;none&quot;
+    },
+    &quot;config_hashes_sha256&quot;: {
+      &quot;coverage_targets.yaml&quot;: &quot;c6ceda6a54425defe898ab0bab0b90015ab1e24b6432c1838feebd8371276d60&quot;,
+      &quot;exceptions.yaml&quot;: &quot;0804b0416c6c75bb021ee642e160272d9deb68053c1f15279c294c1e1711c151&quot;,
+      &quot;policies.yaml&quot;: &quot;4f1d2a0cb7ce2fab450eaa7f12791cd4dfd0a57fb5a2ce482933291900cdd468&quot;,
+      &quot;profiles.yaml&quot;: &quot;425c55705ca4ca4cc00ba233cf9129a78d49c9aff7943644bde57fad3b96aea9&quot;,
+      &quot;provenance.yaml&quot;: &quot;55c45f2ea845a37c5081fe9b5ce3f18a2e6dc904e2f9918e018bf6e00f468141&quot;,
+      &quot;severity_mapping.yaml&quot;: &quot;dfa5904623fb4f5a253166f45547d99016b56172bd54cc912a6f270552568d56&quot;,
+      &quot;tooling.yaml&quot;: &quot;250f593469cdb945a20b252bb60455ecafabeb84307af795a56b999d2c399edd&quot;
+    },
+    &quot;config_versions&quot;: {
+      &quot;coverage_targets&quot;: &quot;1.0.0&quot;,
+      &quot;exceptions&quot;: &quot;1.0.0&quot;,
+      &quot;policies&quot;: &quot;1.0.0&quot;,
+      &quot;profiles&quot;: &quot;1.0.0&quot;,
+      &quot;provenance&quot;: &quot;1.0.0&quot;,
+      &quot;severity_mapping&quot;: &quot;1.0.0&quot;,
+      &quot;tooling&quot;: &quot;1.0.0&quot;
+    },
+    &quot;delta_findings_count&quot;: 4,
+    &quot;generated_at_utc&quot;: &quot;2026-02-23T19:44:22.805859+00:00&quot;,
+    &quot;profile&quot;: &quot;known_provenance&quot;,
+    &quot;provenance&quot;: {
+      &quot;confidence&quot;: &quot;high&quot;,
+      &quot;determination_source&quot;: &quot;env&quot;,
+      &quot;is_uncertain&quot;: false,
+      &quot;note&quot;: &quot;&quot;,
+      &quot;profile&quot;: &quot;known_provenance&quot;,
+      &quot;raw_value&quot;: &quot;human&quot;
+    },
+    &quot;raw_delta_findings&quot;: [
+      {
+        &quot;category&quot;: &quot;weak_crypto&quot;,
+        &quot;cwe&quot;: [
+          &quot;CWE-327&quot;
+        ],
+        &quot;end_line&quot;: 77,
+        &quot;file&quot;: &quot;src/main/java/com/example/CryptoUtil.java&quot;,
+        &quot;fingerprint&quot;: null,
+        &quot;is_secret&quot;: false,
+        &quot;message&quot;: &quot;Weak hash algorithm used in signing workflow&quot;,
+        &quot;rule_id&quot;: &quot;java.weak.crypto.sha1&quot;,
+        &quot;severity&quot;: &quot;MEDIUM&quot;,
+        &quot;signal&quot;: &quot;sast&quot;,
+        &quot;start_line&quot;: 77,
+        &quot;tags&quot;: [
+          &quot;weak-crypto&quot;,
+          &quot;CWE-327&quot;
+        ],
+        &quot;tool&quot;: &quot;semgrep&quot;
+      },
+      {
+        &quot;category&quot;: &quot;weak_crypto&quot;,
+        &quot;cwe&quot;: [
+          &quot;CWE-327&quot;
+        ],
+        &quot;end_line&quot;: 66,
+        &quot;file&quot;: &quot;src/main/java/com/example/CryptoUtil.java&quot;,
+        &quot;fingerprint&quot;: null,
+        &quot;is_secret&quot;: false,
+        &quot;message&quot;: &quot;MD5 is used for a security-sensitive context&quot;,
+        &quot;rule_id&quot;: &quot;java.weak.crypto.md5&quot;,
+        &quot;severity&quot;: &quot;MEDIUM&quot;,
+        &quot;signal&quot;: &quot;sast&quot;,
+        &quot;start_line&quot;: 66,
+        &quot;tags&quot;: [
+          &quot;weak-crypto&quot;,
+          &quot;CWE-327&quot;
+        ],
+        &quot;tool&quot;: &quot;semgrep&quot;
+      },
+      {
+        &quot;category&quot;: &quot;weak_crypto&quot;,
+        &quot;cwe&quot;: [
+          &quot;CWE-327&quot;
+        ],
+        &quot;end_line&quot;: 52,
+        &quot;file&quot;: &quot;src/main/java/com/example/CryptoUtil.java&quot;,
+        &quot;fingerprint&quot;: null,
+        &quot;is_secret&quot;: false,
+        &quot;message&quot;: &quot;MD5 is used for a security-sensitive context&quot;,
+        &quot;rule_id&quot;: &quot;java.weak.crypto.md5&quot;,
+        &quot;severity&quot;: &quot;MEDIUM&quot;,
+        &quot;signal&quot;: &quot;sast&quot;,
+        &quot;start_line&quot;: 52,
+        &quot;tags&quot;: [
+          &quot;weak-crypto&quot;,
+          &quot;CWE-327&quot;
+        ],
+        &quot;tool&quot;: &quot;semgrep&quot;
+      },
+      {
+        &quot;category&quot;: &quot;weak_crypto&quot;,
+        &quot;cwe&quot;: [
+          &quot;CWE-327&quot;
+        ],
+        &quot;end_line&quot;: 33,
+        &quot;file&quot;: &quot;src/main/java/com/example/CryptoUtil.java&quot;,
+        &quot;fingerprint&quot;: null,
+        &quot;is_secret&quot;: false,
+        &quot;message&quot;: &quot;MD5 is used for a security-sensitive context&quot;,
+        &quot;rule_id&quot;: &quot;java.weak.crypto.md5&quot;,
+        &quot;severity&quot;: &quot;MEDIUM&quot;,
+        &quot;signal&quot;: &quot;sast&quot;,
+        &quot;start_line&quot;: 33,
+        &quot;tags&quot;: [
+          &quot;weak-crypto&quot;,
+          &quot;CWE-327&quot;
+        ],
+        &quot;tool&quot;: &quot;semgrep&quot;
+      }
+    ],
+    &quot;reproducibility&quot;: {
+      &quot;deterministic_gate_inputs&quot;: true,
+      &quot;notes&quot;: [
+        &quot;Gate outcome is computed only from parsed findings + profile config + baseline + changed scope.&quot;,
+        &quot;No absolute security claim is made; results are bounded by scanner coverage and tool limitations.&quot;
+      ],
+      &quot;policy_as_code&quot;: true,
+      &quot;thresholds_as_code&quot;: true
+    },
+    &quot;scan_scope&quot;: {
+      &quot;changed_files&quot;: [
+        &quot;src/main/java/com/example/CryptoUtil.java&quot;
+      ],
+      &quot;changed_loc&quot;: 0,
+      &quot;is_exact&quot;: false,
+      &quot;method&quot;: &quot;env_hint&quot;,
+      &quot;notes&quot;: [
+        &quot;Changed files came from CHANGED_FILES hint; changed LOC unavailable.&quot;
+      ]
+    },
+    &quot;tool_inputs&quot;: [
+      {
+        &quot;path&quot;: &quot;examples/generated/soft_warning/normalized_findings.json&quot;,
+        &quot;type&quot;: &quot;json&quot;
+      }
+    ],
+    &quot;tool_versions&quot;: []
+  },
+  &quot;executive_decision_summary&quot;: {
+    &quot;audience&quot;: &quot;Engineering leadership, security reviewers, release managers&quot;,
+    &quot;decision&quot;: &quot;CONDITIONAL_GO&quot;,
+    &quot;decision_request&quot;: &quot;Go/No-Go decision for merge and release progression&quot;,
+    &quot;evidence_requirement_level&quot;: &quot;standard&quot;,
+    &quot;gate_profile&quot;: &quot;known_provenance&quot;,
+    &quot;key_risks&quot;: [
+      {
+        &quot;category&quot;: &quot;weak_crypto&quot;,
+        &quot;count&quot;: 4,
+        &quot;severity&quot;: &quot;MEDIUM&quot;
+      }
+    ],
+    &quot;provenance&quot;: {
+      &quot;confidence&quot;: &quot;high&quot;,
+      &quot;determination_source&quot;: &quot;env&quot;,
+      &quot;is_uncertain&quot;: false,
+      &quot;note&quot;: &quot;&quot;,
+      &quot;profile&quot;: &quot;known_provenance&quot;,
+      &quot;raw_value&quot;: &quot;human&quot;
+    },
+    &quot;rationale&quot;: [
+      &quot;New medium findings exceed warning threshold.&quot;,
+      &quot;Compliance score is below profile target.&quot;,
+      &quot;Required scan signals missing: secrets.&quot;
+    ]
+  },
+  &quot;gate&quot;: {
+    &quot;final_outcome&quot;: &quot;pass_with_warnings&quot;,
+    &quot;hard_stop&quot;: {
+      &quot;metrics&quot;: {
+        &quot;new_critical_findings_count&quot;: 0,
+        &quot;new_high_findings_count&quot;: 0,
+        &quot;secrets_count_delta&quot;: 0
+      },
+      &quot;passed&quot;: true,
+      &quot;thresholds&quot;: {
+        &quot;allow_high_exceptions&quot;: true,
+        &quot;max_new_critical&quot;: 0,
+        &quot;max_new_high&quot;: 0,
+        &quot;max_secrets_in_delta&quot;: 0
+      },
+      &quot;violations&quot;: []
+    },
+    &quot;profile&quot;: &quot;known_provenance&quot;,
+    &quot;reason_summary&quot;: [
+      &quot;New medium findings exceed warning threshold.&quot;,
+      &quot;Compliance score is below profile target.&quot;,
+      &quot;Required scan signals missing: secrets.&quot;
+    ],
+    &quot;soft_gate&quot;: {
+      &quot;medium_low_blocking&quot;: false,
+      &quot;warnings&quot;: [
+        {
+          &quot;actual&quot;: 4,
+          &quot;metric&quot;: &quot;new_medium_findings_count&quot;,
+          &quot;reason&quot;: &quot;New medium findings exceed warning threshold.&quot;,
+          &quot;threshold&quot;: 3
+        },
+        {
+          &quot;actual&quot;: 90.0,
+          &quot;metric&quot;: &quot;compliance_score&quot;,
+          &quot;reason&quot;: &quot;Compliance score is below profile target.&quot;,
+          &quot;threshold&quot;: 95.0
+        },
+        {
+          &quot;actual&quot;: 1,
+          &quot;metric&quot;: &quot;missing_required_signals&quot;,
+          &quot;reason&quot;: &quot;Required scan signals missing: secrets.&quot;,
+          &quot;threshold&quot;: 0
+        }
+      ]
+    },
+    &quot;status_for_ci&quot;: &quot;pass&quot;
+  },
+  &quot;key_metrics_gate_outcome&quot;: {
+    &quot;gate&quot;: {
+      &quot;final_outcome&quot;: &quot;pass_with_warnings&quot;,
+      &quot;hard_stop&quot;: {
+        &quot;metrics&quot;: {
+          &quot;new_critical_findings_count&quot;: 0,
+          &quot;new_high_findings_count&quot;: 0,
+          &quot;secrets_count_delta&quot;: 0
+        },
+        &quot;passed&quot;: true,
+        &quot;thresholds&quot;: {
+          &quot;allow_high_exceptions&quot;: true,
+          &quot;max_new_critical&quot;: 0,
+          &quot;max_new_high&quot;: 0,
+          &quot;max_secrets_in_delta&quot;: 0
+        },
+        &quot;violations&quot;: []
+      },
+      &quot;profile&quot;: &quot;known_provenance&quot;,
+      &quot;reason_summary&quot;: [
+        &quot;New medium findings exceed warning threshold.&quot;,
+        &quot;Compliance score is below profile target.&quot;,
+        &quot;Required scan signals missing: secrets.&quot;
+      ],
+      &quot;soft_gate&quot;: {
+        &quot;medium_low_blocking&quot;: false,
+        &quot;warnings&quot;: [
+          {
+            &quot;actual&quot;: 4,
+            &quot;metric&quot;: &quot;new_medium_findings_count&quot;,
+            &quot;reason&quot;: &quot;New medium findings exceed warning threshold.&quot;,
+            &quot;threshold&quot;: 3
+          },
+          {
+            &quot;actual&quot;: 90.0,
+            &quot;metric&quot;: &quot;compliance_score&quot;,
+            &quot;reason&quot;: &quot;Compliance score is below profile target.&quot;,
+            &quot;threshold&quot;: 95.0
+          },
+          {
+            &quot;actual&quot;: 1,
+            &quot;metric&quot;: &quot;missing_required_signals&quot;,
+            &quot;reason&quot;: &quot;Required scan signals missing: secrets.&quot;,
+            &quot;threshold&quot;: 0
+          }
+        ]
+      },
+      &quot;status_for_ci&quot;: &quot;pass&quot;
+    },
+    &quot;metrics&quot;: {
+      &quot;compliance_score&quot;: 90.0,
+      &quot;coverage_overall_changed_code_percent&quot;: 100.0,
+      &quot;coverage_sast_changed_code_percent&quot;: 100.0,
+      &quot;coverage_sca_applicability_percent&quot;: null,
+      &quot;coverage_secrets_changed_files_percent&quot;: 0.0,
+      &quot;new_critical_findings_count&quot;: 0,
+      &quot;new_findings_count&quot;: 4,
+      &quot;new_high_findings_count&quot;: 0,
+      &quot;new_low_findings_count&quot;: 0,
+      &quot;new_medium_findings_count&quot;: 4,
+      &quot;required_signals_coverage_percent&quot;: 50.0,
+      &quot;secrets_count_delta&quot;: 0,
+      &quot;severity_mix_delta&quot;: {
+        &quot;CRITICAL&quot;: 0,
+        &quot;HIGH&quot;: 0,
+        &quot;INFO&quot;: 0,
+        &quot;LOW&quot;: 0,
+        &quot;MEDIUM&quot;: 4
+      },
+      &quot;severity_mix_overall&quot;: {
+        &quot;CRITICAL&quot;: 0,
+        &quot;HIGH&quot;: 0,
+        &quot;INFO&quot;: 0,
+        &quot;LOW&quot;: 0,
+        &quot;MEDIUM&quot;: 4
+      },
+      &quot;vulnerability_density_delta_per_kloc&quot;: null,
+      &quot;vulnerability_density_overall_per_kloc&quot;: 1.145
+    },
+    &quot;thresholds&quot;: {
+      &quot;allow_high_exceptions&quot;: true,
+      &quot;max_new_critical&quot;: 0,
+      &quot;max_new_high&quot;: 0,
+      &quot;max_secrets_in_delta&quot;: 0
+    }
+  },
+  &quot;limitations_confidence_statement&quot;: {
+    &quot;confidence&quot;: &quot;high&quot;,
+    &quot;credibility_constraints&quot;: [
+      &quot;No absolute security guarantee is claimed.&quot;,
+      &quot;Passing the hard-stop gate indicates threshold compliance within measured scope, not complete security.&quot;
+    ],
+    &quot;limitations&quot;: [
+      {
+        &quot;statement&quot;: &quot;Metrics are based on configured scanner outputs and parsed scope only.&quot;,
+        &quot;usability_note&quot;: &quot;Report remains decision-useful because thresholds, scope, and provenance are explicit.&quot;
+      },
+      {
+        &quot;statement&quot;: &quot;No-finding states can still contain residual risk due to tool blind spots.&quot;,
+        &quot;usability_note&quot;: &quot;Report remains decision-useful because thresholds, scope, and provenance are explicit.&quot;
+      },
+      {
+        &quot;statement&quot;: &quot;Required scan signals missing in this run: secrets.&quot;,
+        &quot;usability_note&quot;: &quot;Report remains decision-useful because thresholds, scope, and provenance are explicit.&quot;
+      }
+    ],
+    &quot;uncertainty_representation&quot;: {
+      &quot;coverage_percent&quot;: 100.0,
+      &quot;evidence_requirement_level&quot;: &quot;standard&quot;,
+      &quot;false_positive_false_negative_note&quot;: &quot;Scanner outputs may contain false positives/false negatives; decisions should include engineering review.&quot;,
+      &quot;provenance_uncertain&quot;: false
+    }
+  },
+  &quot;measure&quot;: {
+    &quot;kloc&quot;: 3.494,
+    &quot;loc&quot;: 3494,
+    &quot;totals_by_severity&quot;: {
+      &quot;CRITICAL&quot;: 0,
+      &quot;HIGH&quot;: 0,
+      &quot;INFO&quot;: 0,
+      &quot;LOW&quot;: 0,
+      &quot;MEDIUM&quot;: 4
+    }
+  },
+  &quot;metadata&quot;: {
+    &quot;commit_sha&quot;: &quot;&quot;,
+    &quot;generated_at_utc&quot;: &quot;2026-02-23T19:44:22.805540+00:00&quot;,
+    &quot;pr_number&quot;: &quot;&quot;,
+    &quot;profile&quot;: &quot;known_provenance&quot;,
+    &quot;provenance&quot;: {
+      &quot;confidence&quot;: &quot;high&quot;,
+      &quot;determination_source&quot;: &quot;env&quot;,
+      &quot;is_uncertain&quot;: false,
+      &quot;note&quot;: &quot;&quot;,
+      &quot;profile&quot;: &quot;known_provenance&quot;,
+      &quot;raw_value&quot;: &quot;human&quot;
+    },
+    &quot;repo&quot;: &quot;nist_auditor&quot;,
+    &quot;run_id&quot;: &quot;&quot;,
+    &quot;workflow&quot;: &quot;&quot;
+  },
+  &quot;policy_compliance_exceptions&quot;: {
+    &quot;active_exceptions&quot;: [],
+    &quot;blocking_failures&quot;: [],
+    &quot;compliance_score&quot;: 90.0,
+    &quot;non_blocking_failures&quot;: [
+      {
+        &quot;blocking&quot;: false,
+        &quot;comparator&quot;: &quot;&gt;=&quot;,
+        &quot;description&quot;: &quot;Required scanner signals (e.g., SAST and secrets) should be present for defensible evidence.&quot;,
+        &quot;evaluation_error&quot;: &quot;&quot;,
+        &quot;exception_id&quot;: null,
+        &quot;exception_rationale&quot;: null,
+        &quot;id&quot;: &quot;POL-005&quot;,
+        &quot;metric&quot;: &quot;required_signals_coverage_percent&quot;,
+        &quot;passed&quot;: false,
+        &quot;threshold&quot;: 100.0,
+        &quot;threshold_ref&quot;: &quot;targets.required_signals_coverage_min&quot;,
+        &quot;title&quot;: &quot;Required scan signal presence&quot;,
+        &quot;value&quot;: 50.0,
+        &quot;weight&quot;: 10.0
+      }
+    ],
+    &quot;policy_version&quot;: &quot;1.0.0&quot;,
+    &quot;rules&quot;: [
+      {
+        &quot;blocking&quot;: true,
+        &quot;comparator&quot;: &quot;&lt;=&quot;,
+        &quot;description&quot;: &quot;New critical findings in changed scope must remain at or below configured hard-stop threshold.&quot;,
+        &quot;evaluation_error&quot;: &quot;&quot;,
+        &quot;exception_id&quot;: null,
+        &quot;exception_rationale&quot;: null,
+        &quot;id&quot;: &quot;POL-001&quot;,
+        &quot;metric&quot;: &quot;new_critical_findings_count&quot;,
+        &quot;passed&quot;: true,
+        &quot;threshold&quot;: 0,
+        &quot;threshold_ref&quot;: &quot;hard_stop.max_new_critical&quot;,
+        &quot;title&quot;: &quot;No new critical findings in delta&quot;,
+        &quot;value&quot;: 0,
+        &quot;weight&quot;: 25.0
+      },
+      {
+        &quot;blocking&quot;: true,
+        &quot;comparator&quot;: &quot;&lt;=&quot;,
+        &quot;description&quot;: &quot;New high findings in changed scope must remain at or below configured hard-stop threshold.&quot;,
+        &quot;evaluation_error&quot;: &quot;&quot;,
+        &quot;exception_id&quot;: null,
+        &quot;exception_rationale&quot;: null,
+        &quot;id&quot;: &quot;POL-002&quot;,
+        &quot;metric&quot;: &quot;new_high_findings_count&quot;,
+        &quot;passed&quot;: true,
+        &quot;threshold&quot;: 0,
+        &quot;threshold_ref&quot;: &quot;hard_stop.max_new_high&quot;,
+        &quot;title&quot;: &quot;No new high findings in delta&quot;,
+        &quot;value&quot;: 0,
+        &quot;weight&quot;: 25.0
+      },
+      {
+        &quot;blocking&quot;: true,
+        &quot;comparator&quot;: &quot;&lt;=&quot;,
+        &quot;description&quot;: &quot;Secrets in scanned change set are deterministic blockers.&quot;,
+        &quot;evaluation_error&quot;: &quot;&quot;,
+        &quot;exception_id&quot;: null,
+        &quot;exception_rationale&quot;: null,
+        &quot;id&quot;: &quot;POL-003&quot;,
+        &quot;metric&quot;: &quot;secrets_count_delta&quot;,
+        &quot;passed&quot;: true,
+        &quot;threshold&quot;: 0,
+        &quot;threshold_ref&quot;: &quot;hard_stop.max_secrets_in_delta&quot;,
+        &quot;title&quot;: &quot;No leaked secrets in delta&quot;,
+        &quot;value&quot;: 0,
+        &quot;weight&quot;: 25.0
+      },
+      {
+        &quot;blocking&quot;: false,
+        &quot;comparator&quot;: &quot;&gt;=&quot;,
+        &quot;description&quot;: &quot;Changed code coverage should meet profile target to avoid false confidence.&quot;,
+        &quot;evaluation_error&quot;: &quot;&quot;,
+        &quot;exception_id&quot;: null,
+        &quot;exception_rationale&quot;: null,
+        &quot;id&quot;: &quot;POL-004&quot;,
+        &quot;metric&quot;: &quot;coverage_overall_changed_code_percent&quot;,
+        &quot;passed&quot;: true,
+        &quot;threshold&quot;: 95.0,
+        &quot;threshold_ref&quot;: &quot;targets.coverage_changed_code_min&quot;,
+        &quot;title&quot;: &quot;Changed-code coverage target&quot;,
+        &quot;value&quot;: 100.0,
+        &quot;weight&quot;: 15.0
+      },
+      {
+        &quot;blocking&quot;: false,
+        &quot;comparator&quot;: &quot;&gt;=&quot;,
+        &quot;description&quot;: &quot;Required scanner signals (e.g., SAST and secrets) should be present for defensible evidence.&quot;,
+        &quot;evaluation_error&quot;: &quot;&quot;,
+        &quot;exception_id&quot;: null,
+        &quot;exception_rationale&quot;: null,
+        &quot;id&quot;: &quot;POL-005&quot;,
+        &quot;metric&quot;: &quot;required_signals_coverage_percent&quot;,
+        &quot;passed&quot;: false,
+        &quot;threshold&quot;: 100.0,
+        &quot;threshold_ref&quot;: &quot;targets.required_signals_coverage_min&quot;,
+        &quot;title&quot;: &quot;Required scan signal presence&quot;,
+        &quot;value&quot;: 50.0,
+        &quot;weight&quot;: 10.0
+      }
+    ]
+  },
+  &quot;schema_version&quot;: &quot;1.0.0&quot;,
+  &quot;scope_context&quot;: {
+    &quot;assessed_assets&quot;: [
+      &quot;src/main/java/com/example/CryptoUtil.java&quot;
+    ],
+    &quot;exposure_assumptions&quot;: [
+      &quot;Findings are evaluated for changed code scope first (delta-oriented gating).&quot;,
+      &quot;Tool outputs are treated as signals; absence of findings does not imply absence of risk.&quot;
+    ],
+    &quot;scan_scope&quot;: {
+      &quot;changed_files&quot;: [
+        &quot;src/main/java/com/example/CryptoUtil.java&quot;
+      ],
+      &quot;changed_loc&quot;: 0,
+      &quot;is_exact&quot;: false,
+      &quot;method&quot;: &quot;env_hint&quot;,
+      &quot;notes&quot;: [
+        &quot;Changed files came from CHANGED_FILES hint; changed LOC unavailable.&quot;
+      ]
+    },
+    &quot;scope_boundaries&quot;: [
+      &quot;Only configured scanners and parsers are included in this report.&quot;,
+      &quot;Runtime behavior and production-only controls are outside direct static scan evidence.&quot;
+    ]
+  }
+}</pre></body></html>
