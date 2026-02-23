@@ -7,6 +7,7 @@
     "schema_version",
     "metadata",
     "executive_decision_summary",
+    "rmf_function_mapping",
     "scope_context",
     "key_metrics_gate_outcome",
     "policy_compliance_exceptions",
@@ -27,6 +28,17 @@
         "gate_profile": {"type": "string"},
         "provenance": {"type": "object"},
         "rationale": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "rmf_function_mapping": {
+      "type": "object",
+      "required": ["model", "functions_in_scope", "functions"],
+      "properties": {
+        "model": {"type": "string"},
+        "functions_in_scope": {"type": "array", "items": {"type": "string"}},
+        "mapping_version": {"type": "string"},
+        "functions": {"type": "object"},
+        "constraints": {"type": "array", "items": {"type": "string"}}
       }
     },
     "scope_context": {"type": "object"},
