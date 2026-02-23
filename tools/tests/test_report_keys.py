@@ -140,6 +140,7 @@ def test_report_required_keys(tmp_path: Path):
 
     for key in (
         "executive_decision_summary",
+        "rmf_function_mapping",
         "scope_context",
         "key_metrics_gate_outcome",
         "policy_compliance_exceptions",
