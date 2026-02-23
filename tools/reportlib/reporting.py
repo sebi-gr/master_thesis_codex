@@ -79,6 +79,109 @@ def _build_action_plan(gate_result: dict[str, Any], delta_findings: list[dict[st
     return deduped
 
 
+def _build_rmf_function_mapping(
+    profile_name: str,
+    evidence_requirement: str,
+    metrics_block: dict[str, Any],
+    gate_result: dict[str, Any],
+    compliance_result: dict[str, Any],
+    coverage_result: dict[str, Any],
+    evidence_appendix: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "model": "NIST AI RMF",
+        "functions_in_scope": ["MAP", "MEASURE", "MANAGE", "GOVERN"],
+        "mapping_version": "1.0.0",
+        "functions": {
+            "MAP": {
+                "objective": "Define decision context, assessed scope, exposure assumptions, and provenance transparency.",
+                "implemented_by": [
+                    "scope_context",
+                    "executive_decision_summary.provenance",
+                    "executive_decision_summary.key_risks",
+                ],
+                "key_outputs": [
+                    "assessed_assets",
+                    "scan_scope",
+                    "exposure_assumptions",
+                    "scope_boundaries",
+                    "provenance_classification_and_confidence",
+                ],
+                "traceability": {
+                    "scan_scope_method": (evidence_appendix.get("scan_scope") or {}).get("method"),
+                    "changed_files_count": len((evidence_appendix.get("scan_scope") or {}).get("changed_files") or []),
+                    "provenance_source": (evidence_appendix.get("provenance") or {}).get("determination_source"),
+                },
+            },
+            "MEASURE": {
+                "objective": "Produce repeatable security metrics and policy evaluation signals for gate decisions.",
+                "implemented_by": [
+                    "key_metrics_gate_outcome.metrics",
+                    "policy_compliance_exceptions.rules",
+                    "coverage_metrics",
+                ],
+                "key_outputs": [
+                    "new_critical_findings_count",
+                    "new_high_findings_count",
+                    "severity_mix_delta_and_overall",
+                    "secrets_count_delta",
+                    "vulnerability_density_delta_per_kloc",
+                    "compliance_score",
+                    "coverage_changed_code_and_required_signal_coverage",
+                ],
+                "traceability": {
+                    "policy_rules_evaluated": len(compliance_result.get("rules") or []),
+                    "required_signals_coverage_percent": coverage_result.get("required_signals_coverage_percent"),
+                    "overall_findings_count": metrics_block.get("overall_findings_count"),
+                },
+            },
+            "MANAGE": {
+                "objective": "Make deterministic risk decisions and assign accountable remediation actions.",
+                "implemented_by": [
+                    "key_metrics_gate_outcome.gate",
+                    "action_plan_with_accountability",
+                ],
+                "key_outputs": [
+                    "hard_stop_gate_pass_or_fail",
+                    "soft_warning_context",
+                    "final_decision_go_no_go_conditional_go",
+                    "prioritized_actions_with_owner_role_and_follow_up",
+                ],
+                "traceability": {
+                    "hard_stop_violations": len((gate_result.get("hard_stop") or {}).get("violations") or []),
+                    "soft_warnings": len((gate_result.get("soft_gate") or {}).get("warnings") or []),
+                    "ci_status": gate_result.get("status_for_ci"),
+                },
+            },
+            "GOVERN": {
+                "objective": "Ensure policy-as-code, auditability, reproducibility metadata, and exception governance.",
+                "implemented_by": [
+                    "policy_compliance_exceptions",
+                    "evidence_appendix",
+                    "security_config/*",
+                ],
+                "key_outputs": [
+                    "policy_rule_pass_fail_with_thresholds",
+                    "active_exception_traceability",
+                    "config_versions_and_hashes",
+                    "tool_inputs_and_versions",
+                    "reproducibility_metadata",
+                ],
+                "traceability": {
+                    "profile": profile_name,
+                    "evidence_requirement_level": evidence_requirement,
+                    "config_hash_file_count": len(evidence_appendix.get("config_hashes_sha256") or {}),
+                    "policy_version": (evidence_appendix.get("config_versions") or {}).get("policies"),
+                },
+            },
+        },
+        "constraints": [
+            "Mapping supports governance decisions but does not imply complete absence of security risk.",
+            "Outputs are bounded by scanner scope, parser coverage, and available baseline/diff evidence.",
+        ],
+    }
+
+
 def build_structured_report(
     metadata: dict[str, Any],
     profile_name: str,
@@ -121,6 +224,16 @@ def build_structured_report(
     if profile_name == "ai_or_unknown_provenance":
         evidence_requirement = "high"
 
+    rmf_function_mapping = _build_rmf_function_mapping(
+        profile_name=profile_name,
+        evidence_requirement=evidence_requirement,
+        metrics_block=metrics_block,
+        gate_result=gate_result,
+        compliance_result=compliance_result,
+        coverage_result=coverage_result,
+        evidence_appendix=evidence_appendix,
+    )
+
     return {
         "schema_version": "1.0.0",
         "metadata": metadata,
@@ -134,6 +247,7 @@ def build_structured_report(
             "provenance": provenance_result,
             "rationale": hard_reasons if hard_reasons else soft_reasons,
         },
+        "rmf_function_mapping": rmf_function_mapping,
         "scope_context": {
             "assessed_assets": sorted({str(f.get("file")) for f in metrics_block.get("all_findings", []) if f.get("file")}),
             "scan_scope": evidence_appendix.get("scan_scope"),
@@ -223,12 +337,30 @@ def render_markdown_report(report: dict[str, Any]) -> str:
         f"- Evidence requirement: `{exec_summary.get('evidence_requirement_level')}`",
         f"- Provenance: `{exec_summary['provenance'].get('raw_value')}` (confidence: {exec_summary['provenance'].get('confidence')})",
         "",
-        "## 2. Scope & Context",
+        "## 2. NIST AI RMF Function Mapping",
+    ]
+
+    rmf_map = report.get("rmf_function_mapping", {})
+    rmf_functions = (rmf_map.get("functions") or {})
+    for fn_name in ("MAP", "MEASURE", "MANAGE", "GOVERN"):
+        fn = rmf_functions.get(fn_name) or {}
+        lines.extend(
+            [
+                f"- {fn_name}: {fn.get('objective', 'n/a')}",
+                f"  - Implemented by: {', '.join(fn.get('implemented_by') or []) or 'n/a'}",
+                f"  - Key outputs: {', '.join(fn.get('key_outputs') or []) or 'n/a'}",
+            ]
+        )
+
+    lines.extend(
+        [
+            "",
+            "## 3. Scope & Context",
         f"- Scan scope method: `{report['scope_context']['scan_scope'].get('method')}`",
         f"- Changed files in scope: {len(report['scope_context']['scan_scope'].get('changed_files') or [])}",
         f"- Assessed assets: {len(report['scope_context']['assessed_assets'])}",
         "",
-        "## 3. Key Metrics & Gate Outcome",
+        "## 4. Key Metrics & Gate Outcome",
         f"- Hard-stop status: **{'PASS' if gate['hard_stop']['passed'] else 'FAIL'}**",
         f"- New critical findings: {metrics['new_critical_findings_count']}",
         f"- New high findings: {metrics['new_high_findings_count']}",
@@ -237,13 +369,13 @@ def render_markdown_report(report: dict[str, Any]) -> str:
         f"- Compliance score: {metrics['compliance_score']}",
         f"- Coverage (changed code): {metrics['coverage_overall_changed_code_percent']}",
         "",
-        "## 4. Policy Compliance & Exceptions",
+        "## 5. Policy Compliance & Exceptions",
         f"- Policy compliance score: {policy['compliance_score']}",
         f"- Blocking rule failures: {len(policy['blocking_failures'])}",
         f"- Active exceptions: {len(policy['active_exceptions'])}",
         "",
-        "## 5. Action Plan with Accountability",
-    ]
+        "## 6. Action Plan with Accountability",
+    ])
 
     for action in report.get("action_plan_with_accountability", []):
         lines.append(
@@ -253,7 +385,7 @@ def render_markdown_report(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## 6. Limitations & Confidence Statement",
+            "## 7. Limitations & Confidence Statement",
             f"- Confidence: {report['limitations_confidence_statement']['confidence']}",
             "- Limitations:",
         ]
@@ -265,7 +397,7 @@ def render_markdown_report(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "## 7. Evidence Appendix",
+            "## 8. Evidence Appendix",
             f"- Generated at: {report['evidence_appendix']['generated_at_utc']}",
             f"- Tool versions: {', '.join(report['evidence_appendix'].get('tool_versions') or []) or 'n/a'}",
             f"- Config hashes captured: {len(report['evidence_appendix'].get('config_hashes_sha256') or {})}",
