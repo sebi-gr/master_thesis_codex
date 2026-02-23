@@ -18,6 +18,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+# Support both:
+# - python tools/report_step.py
+# - python -m tools.report_step
+if __package__ in (None, ""):
+    _repo_root = Path(__file__).resolve().parents[1]
+    if str(_repo_root) not in sys.path:
+        sys.path.insert(0, str(_repo_root))
+
 from tools.reportlib import (
     io,
     config,
