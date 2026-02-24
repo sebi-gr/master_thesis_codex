@@ -135,15 +135,15 @@ def _render_rmf_rows(rmf_mapping: dict[str, Any]) -> str:
     rows: list[str] = []
     for fn_name in ("MAP", "MEASURE", "MANAGE", "GOVERN"):
         fn = functions.get(fn_name) or {}
+        objective = _h(fn.get("objective"))
         rows.append(
             "<tr>"
-            f"<td><span class='pill'>{_h(fn_name)}</span></td>"
-            f"<td>{_h(fn.get('objective'))}</td>"
+            f"<td><span class='pill tip' data-tip='{objective}'>{_h(fn_name)}</span></td>"
             f"<td>{_h(', '.join(fn.get('implemented_by') or []))}</td>"
             f"<td>{_h(', '.join(fn.get('key_outputs') or []))}</td>"
             "</tr>"
         )
-    return "".join(rows) or "<tr><td colspan='4'>No RMF mapping available.</td></tr>"
+    return "".join(rows) or "<tr><td colspan='3'>No RMF mapping available.</td></tr>"
 
 
 def render_html(report: dict, template_path: Path) -> str:
@@ -225,6 +225,25 @@ def render_html(report: dict, template_path: Path) -> str:
     .pill.good {{ color: var(--good); background: var(--good-bg); border-color: #b7e1c1; }}
     .pill.warn {{ color: var(--warn); background: var(--warn-bg); border-color: #f2cf7a; }}
     .pill.bad {{ color: var(--bad); background: var(--bad-bg); border-color: #f4b3ae; }}
+    .tip {{ position: relative; }}
+    .tip:hover::after {{
+      content: attr(data-tip);
+      position: absolute;
+      left: 0;
+      top: calc(100% + 8px);
+      min-width: 260px;
+      max-width: 420px;
+      white-space: normal;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      z-index: 100;
+      font-weight: 500;
+      line-height: 1.35;
+    }}
     .grid {{ display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }}
     .kpi {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; box-shadow: var(--shadow); }}
     .kpi .k {{ color: var(--muted); font-size: 12px; margin-bottom: 6px; }}
@@ -237,6 +256,10 @@ def render_html(report: dict, template_path: Path) -> str:
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ text-align: left; padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }}
     th {{ color: var(--muted); width: 32%; font-weight: 600; }}
+    .rmf-table col.func-col {{ width: 8%; }}
+    .rmf-table col.impl-col {{ width: 46%; }}
+    .rmf-table col.out-col {{ width: 46%; }}
+    .rmf-table th:first-child, .rmf-table td:first-child {{ white-space: nowrap; width: 1%; }}
     ul {{ margin: 8px 0 0 20px; padding: 0; }}
     li {{ margin: 6px 0; }}
     pre {{ background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; padding: 10px; overflow: auto; max-height: 360px; }}
@@ -266,15 +289,22 @@ def render_html(report: dict, template_path: Path) -> str:
     </section>
 
     <section class="section">
-      <div>
-        <h2>NIST AI RMF Mapping</h2>
-        <table>
-          <tr><th>Function</th><th>Objective</th><th>Implemented By</th><th>Key Outputs</th></tr>
-          {_render_rmf_rows(rmf_mapping)}
-        </table>
-        <h3 style="margin-top: 14px;">RMF Constraints</h3>
-        <ul>{_render_list((rmf_mapping.get('constraints') or []))}</ul>
-      </div>
+      <details class="card">
+        <summary><strong>NIST AI RMF Mapping Explanation</strong></summary>
+        <div class="body">
+          <table class="rmf-table">
+            <colgroup>
+              <col class="func-col" />
+              <col class="impl-col" />
+              <col class="out-col" />
+            </colgroup>
+            <tr><th>Function</th><th>Implemented By</th><th>Key Outputs</th></tr>
+            {_render_rmf_rows(rmf_mapping)}
+          </table>
+          <h3 style="margin-top: 14px;">RMF Constraints</h3>
+          <ul>{_render_list((rmf_mapping.get('constraints') or []))}</ul>
+        </div>
+      </details>
     </section>
 
     <section class="section split">
