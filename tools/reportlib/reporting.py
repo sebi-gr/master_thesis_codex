@@ -96,16 +96,14 @@ def _build_rmf_function_mapping(
             "MAP": {
                 "objective": "Define decision context, assessed scope, exposure assumptions, and provenance transparency.",
                 "implemented_by": [
-                    "scope_context",
-                    "executive_decision_summary.provenance",
-                    "executive_decision_summary.key_risks",
+                    "Assessment scope definition (assets, boundaries, assumptions)",
+                    "Provenance classification with confidence and uncertainty handling",
+                    "Decision-oriented risk framing for stakeholders",
                 ],
                 "key_outputs": [
-                    "assessed_assets",
-                    "scan_scope",
-                    "exposure_assumptions",
-                    "scope_boundaries",
-                    "provenance_classification_and_confidence",
+                    "Clearly documented assessed assets and boundaries",
+                    "Transparent scan scope and exposure assumptions",
+                    "Explicit provenance classification and confidence",
                 ],
                 "traceability": {
                     "scan_scope_method": (evidence_appendix.get("scan_scope") or {}).get("method"),
@@ -116,18 +114,14 @@ def _build_rmf_function_mapping(
             "MEASURE": {
                 "objective": "Produce repeatable security metrics and policy evaluation signals for gate decisions.",
                 "implemented_by": [
-                    "key_metrics_gate_outcome.metrics",
-                    "policy_compliance_exceptions.rules",
-                    "coverage_metrics",
+                    "Normalized multi-tool security findings processing",
+                    "Deterministic metric calculation for delta and overall views",
+                    "Policy rule evaluation and coverage measurement",
                 ],
                 "key_outputs": [
-                    "new_critical_findings_count",
-                    "new_high_findings_count",
-                    "severity_mix_delta_and_overall",
-                    "secrets_count_delta",
-                    "vulnerability_density_delta_per_kloc",
-                    "compliance_score",
-                    "coverage_changed_code_and_required_signal_coverage",
+                    "New Critical/High findings counts and secrets count in changed scope",
+                    "Severity distribution for delta and overall findings",
+                    "Vulnerability density, compliance score, and coverage indicators",
                 ],
                 "traceability": {
                     "policy_rules_evaluated": len(compliance_result.get("rules") or []),
@@ -138,14 +132,14 @@ def _build_rmf_function_mapping(
             "MANAGE": {
                 "objective": "Make deterministic risk decisions and assign accountable remediation actions.",
                 "implemented_by": [
-                    "key_metrics_gate_outcome.gate",
-                    "action_plan_with_accountability",
+                    "Hard-stop and soft-warning gate evaluation",
+                    "Decision logic tied to profile-specific thresholds",
+                    "Action planning with owner roles and follow-up timelines",
                 ],
                 "key_outputs": [
-                    "hard_stop_gate_pass_or_fail",
-                    "soft_warning_context",
-                    "final_decision_go_no_go_conditional_go",
-                    "prioritized_actions_with_owner_role_and_follow_up",
+                    "Deterministic pass/fail gate outcome for CI",
+                    "Non-blocking warning context for risk triage",
+                    "Prioritized remediation actions with accountability",
                 ],
                 "traceability": {
                     "hard_stop_violations": len((gate_result.get("hard_stop") or {}).get("violations") or []),
@@ -156,16 +150,14 @@ def _build_rmf_function_mapping(
             "GOVERN": {
                 "objective": "Ensure policy-as-code, auditability, reproducibility metadata, and exception governance.",
                 "implemented_by": [
-                    "policy_compliance_exceptions",
-                    "evidence_appendix",
-                    "security_config/*",
+                    "Versioned policy and threshold configuration as code",
+                    "Evidence packaging for tool inputs, versions, and config fingerprints",
+                    "Exception tracking with rationale and scope",
                 ],
                 "key_outputs": [
-                    "policy_rule_pass_fail_with_thresholds",
-                    "active_exception_traceability",
-                    "config_versions_and_hashes",
-                    "tool_inputs_and_versions",
-                    "reproducibility_metadata",
+                    "Auditable policy compliance decisions and exception visibility",
+                    "Reproducibility metadata (config versions/hashes, tool provenance)",
+                    "Traceable governance context for review and assurance",
                 ],
                 "traceability": {
                     "profile": profile_name,
