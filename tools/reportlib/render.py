@@ -265,16 +265,14 @@ def render_html(report: dict, template_path: Path) -> str:
       </div>
     </section>
 
-    <section class="section split">
+    <section class="section">
       <div>
         <h2>NIST AI RMF Mapping</h2>
         <table>
           <tr><th>Function</th><th>Objective</th><th>Implemented By</th><th>Key Outputs</th></tr>
           {_render_rmf_rows(rmf_mapping)}
         </table>
-      </div>
-      <div>
-        <h2>RMF Constraints</h2>
+        <h3 style="margin-top: 14px;">RMF Constraints</h3>
         <ul>{_render_list((rmf_mapping.get('constraints') or []))}</ul>
       </div>
     </section>
